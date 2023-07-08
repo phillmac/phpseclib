@@ -4458,6 +4458,10 @@ class SSH2
     {
         // see http://tools.ietf.org/html/rfc4254#section-5.3
 
+        if(isset($this->server_channels[$client_channel]) === false) {
+            throw new ConnectionClosedException('Client channel is unset');
+        }
+
         $this->send_binary_packet(pack('CN', NET_SSH2_MSG_CHANNEL_EOF, $this->server_channels[$client_channel]));
 
         if (!$want_reply) {
